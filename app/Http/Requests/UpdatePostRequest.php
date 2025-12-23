@@ -11,7 +11,7 @@ class UpdatePostRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return $this->user()->can('update', $this->post);
     }
 
     /**
@@ -23,6 +23,8 @@ class UpdatePostRequest extends FormRequest
     {
         return [
             //
+            'title' => 'required|min:3',
+            'description' => 'required'
         ];
     }
 }
