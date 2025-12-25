@@ -15,7 +15,11 @@
                 </div>
 
                 <div>
-                    <p class="font-medium">{{ $post->user->name }}</p>
+                    <p class="font-medium">
+                        <a href="{{route('blog.profile.show',$post->user->name)}}" class="hover:text-blue-600">
+                            {{ $post->user->name }}
+                        </a>
+                    </p>
                     <p class="text-xs text-gray-500">
                         {{ $post->created_at->diffForHumans() }}
                     </p>

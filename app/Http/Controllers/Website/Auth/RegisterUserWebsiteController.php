@@ -26,7 +26,7 @@ class RegisterUserWebsiteController extends Controller
 
             Auth::login($user);
 
-            return redirect(route('blog.home', absolute: false));
+            return redirect(route('blog', absolute: false));
         }catch (\Exception $e){
             return response()->json(['error' => $e->getMessage()]);
         }

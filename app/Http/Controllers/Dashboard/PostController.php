@@ -10,6 +10,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
@@ -37,10 +38,12 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request):RedirectResponse
     {
-        $requests = $request->validated();
-        Post::create($requests);
-        if(Auth::user()->is_admin){
+        $post = $request->validated();
+        $post['user_id'] = auth()->id();
+        $post['slug'] = Str::slug($post['title']).'-' . uniqid();
+        Post::create($post);
 
+        if(Auth::user()->is_admin){
             return redirect()->route('posts.index');
         }
         return redirect()->route('blog');
@@ -72,8 +75,11 @@ class PostController extends Controller
     {
         //
         $requestPost = $request->validated();
+        if($request->has('title')){
+            $requestPost['slug'] = Str::slug($requestPost['title']).'-' . uniqid();
+        }
         $post->update($requestPost);
-        return redirect()->route('posts.show',['post' =>$post])->with('success', 'Post updated successfully');;
+        return redirect()->route('posts.show',['post' =>$post])->with('success', 'Post updated successfully');
     }
 
     /**

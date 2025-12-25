@@ -11,7 +11,7 @@ class BlogController extends Controller
     public function index(){
         $posts = Post::all();
         return view('website.index',[
-            'posts' => $posts,
+            'posts' => $posts->sortByDesc('created_at'),
         ]);
     }
 }

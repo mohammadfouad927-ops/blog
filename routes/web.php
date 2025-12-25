@@ -5,6 +5,7 @@ use App\Http\Controllers\Dashboard\PostController;
 use App\Http\Controllers\Website\PostController as WebsitePostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Website\ProfileController as WebsiteProfileController;
+use App\Http\Controllers\Website\SettingController as WebsiteSettingController;
 use App\Http\Controllers\Website\BlogController;
 use App\Http\Middleware\isadmin;
 use Illuminate\Support\Facades\Route;
@@ -29,13 +30,22 @@ Route::prefix('/dashboard')->group(function(){
 
 
 Route::prefix('/blog')->group(function(){
-    Route::get('/', [BlogController::class,'index'])->middleware('auth')->name('blog');
+
+    Route::get('/', [BlogController::class,'index'])->name('blog');
+
     Route::middleware('auth')->group(function () {
-            Route::get('/profile', [WebsiteProfileController::class, 'edit'])->name('blog.profile.edit');
-            Route::patch('/profile', [WebsiteProfileController::class, 'update'])->name('blog.profile.update');
-            Route::delete('/profile', [WebsiteProfileController::class, 'destroy'])->name('blog.profile.destroy');
+            Route::get('/me/settings', [WebsiteSettingController::class, 'edit'])->name('blog.settings.edit');
+            Route::patch('/me/settings', [WebsiteSettingController::class, 'update'])->name('blog.settings.update');
+            Route::delete('/me/settings', [WebsiteSettingController::class, 'destroy'])->name('blog.settings.destroy');
         });
-    Route::resource('/posts', WebsitePostController::class)->middleware('auth')->names('blog.posts');
+
+    Route::get('/@{user:name}/{post:slug}',[WebsitePostController::class,'show'])->name('blog.post.show');
+    Route::resource('posts', WebsitePostController::class)
+        ->only(['edit', 'update', 'store', 'destroy'])
+        ->middlewareFor(['edit', 'update', 'store', 'destroy'],'auth')
+        ->names('blog.post');
+
+    Route::get('/@{user:name}', [WebsiteProfileController::class, 'show'])->name('blog.profile.show');
 
 });
 

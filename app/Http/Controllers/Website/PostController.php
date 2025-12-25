@@ -5,12 +5,18 @@ namespace App\Http\Controllers\Website;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostRequest;
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class PostController extends Controller
 {
+    use AuthorizesRequests;
+
     /**
      * Display a listing of the resource.
      */
@@ -34,6 +40,7 @@ class PostController extends Controller
     {
         $post = $request->validated();
         $post['user_id'] = auth()->id();
+        $post['slug'] = Str::slug($post['title']).'-' . uniqid();
         Post::create($post);
         return redirect()->route('blog');
     }
@@ -41,8 +48,8 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Post $post):View
-    {
+
+    public function show(User $user, Post $post):View{
         return view('website.post.show',[
             'post' => $post,
         ]);
@@ -67,8 +74,11 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Post $post)
+    public function destroy(User $user,Post $post)
     {
-        //
+        $this->authorize('delete', $post);
+        $post->delete();
+        return redirect()->route('blog.profile.show',[Auth::user()->name])->with('success', 'Post deleted successfully');
     }
+
 }

@@ -26,7 +26,12 @@
                     <!-- Dropdown -->
                     <div id="userMenu"
                          class="hidden absolute right-0 mt-2 w-40 bg-white border rounded shadow">
-                        <a href="{{ route('blog.profile.edit') }}"
+                        <a href="{{ route('blog.settings.edit') }}"
+                           class="block px-4 py-2 hover:bg-gray-100">
+                            Settings
+                        </a>
+
+                        <a href="{{ route('blog.profile.show',[Auth::user()]) }}"
                            class="block px-4 py-2 hover:bg-gray-100">
                             Profile
                         </a>

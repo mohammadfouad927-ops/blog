@@ -33,9 +33,9 @@
                 </td>
 
                 <td class="px-6 py-4">
-                                    <span class="text-gray-700">
-                                        {{ Str::limit($post->description, 60) }}
-                                    </span>
+                    <span class="text-gray-700">
+                        {{ Str::limit($post->description, 60) }}
+                    </span>
                 </td>
 
                 <td class="px-6 py-4 whitespace-nowrap">

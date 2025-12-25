@@ -1,13 +1,13 @@
 @extends('layouts.website')
 
-@section('title', 'Blog')
+@section('title', 'TechBlog')
 
 @section('content')
 
     {{-- Create Post --}}
         @auth
             <div class="bg-white rounded-xl shadow p-4 mb-8">
-                <form method="POST" action="{{ route('blog.posts.store') }}">
+                <form method="POST" action="{{ route('blog.post.store',[Auth::user()->name]) }}">
                     @csrf
 
 
@@ -72,15 +72,17 @@
         @foreach($posts as $post)
             <div class="bg-white p-6 rounded shadow">
                 <h2 class="text-xl font-semibold">
-                    <a href="{{route('blog.posts.show', $post)}}" class="hover:text-blue-600">
+                    <a href="{{route('blog.post.show', [$post->user->name, $post->slug])}}" class="hover:text-blue-600">
                         {{ $post->title }}
                     </a>
                 </h2>
                 <p class="text-gray-600 mt-2">
                     {{ Str::limit($post->description, 150) }}
                 </p>
-                <p class="text-sm text-gray-400 mt-2">
-                    By {{ $post->user->name }}
+                <p class="text-lg mt-2">
+                    <a href="{{route('blog.profile.show', $post->user)}}" class="hover:text-blue-600">
+                        {{ $post->user->name }}
+                    </a>
                 </p>
             </div>
         @endforeach
