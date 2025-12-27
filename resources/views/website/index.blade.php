@@ -86,6 +86,7 @@
     <script>
         document.getElementById('load-more')?.addEventListener('click', function () {
             let button = this;
+            button.style = 'display: none;';
             let page = button.getAttribute('data-next-page');
 
             fetch(`?page=${page}`,
@@ -102,6 +103,9 @@
 
                 if (!html.trim()) {
                     button.remove();
+                }
+                else {
+                    button.style = '';
                 }
             });
         });
