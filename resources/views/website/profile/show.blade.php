@@ -56,7 +56,7 @@
                 </p>
 
                 {{-- Read more --}}
-                <a href="{{ route('blog.post.show', [$post->user, $post]) }}"
+                <a href="{{ route('blog.post.show', [$user, $post]) }}"
                    class="inline-block mt-3 text-sm font-medium text-green-700 hover:underline">
                     Read more →
                 </a>
@@ -64,6 +64,7 @@
         @empty
             <p class="text-gray-500 text-center">You haven't created any posts yet.</p>
         @endforelse
+        {{$posts->links()}}
 
     </div>
 

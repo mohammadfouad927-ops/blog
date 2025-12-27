@@ -11,13 +11,13 @@
             {{-- Header --}}
             <div class="flex items-center gap-3 mb-4">
                 <div class="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center font-semibold text-lg">
-                    {{ strtoupper($post->user->name[0]) }}
+                    {{ strtoupper($user->name[0]) }}
                 </div>
 
                 <div>
                     <p class="font-medium">
-                        <a href="{{route('blog.profile.show',$post->user->name)}}" class="hover:text-blue-600">
-                            {{ $post->user->name }}
+                        <a href="{{route('blog.profile.show',$user->name)}}" class="hover:text-blue-600">
+                            {{ $user->name }}
                         </a>
                     </p>
                     <p class="text-xs text-gray-500">

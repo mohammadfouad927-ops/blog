@@ -52,6 +52,7 @@ class PostController extends Controller
     public function show(User $user, Post $post):View{
         return view('website.post.show',[
             'post' => $post,
+            'user' => $user
         ]);
     }
 

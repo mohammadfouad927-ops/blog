@@ -9,6 +9,10 @@
     </x-slot>
 
 
+    <div class="mt-2 mb-2 px-2 py-2">
+            {{ $posts->onEachSide(5)->links() }}
+
+    </div>
 
     <table class="min-w-full divide-y divide-gray-200 py-12">
         <thead class="bg-gray-50">

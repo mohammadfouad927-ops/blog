@@ -68,23 +68,44 @@
 
         <h1 class="text-3xl font-bold mb-6">Latest Posts</h1>
 
-    <div class="grid gap-6">
-        @foreach($posts as $post)
-            <div class="bg-white p-6 rounded shadow">
-                <h2 class="text-xl font-semibold">
-                    <a href="{{route('blog.post.show', [$post->user->name, $post->slug])}}" class="hover:text-blue-600">
-                        {{ $post->title }}
-                    </a>
-                </h2>
-                <p class="text-gray-600 mt-2">
-                    {{ Str::limit($post->description, 150) }}
-                </p>
-                <p class="text-lg mt-2">
-                    <a href="{{route('blog.profile.show', $post->user)}}" class="hover:text-blue-600">
-                        {{ $post->user->name }}
-                    </a>
-                </p>
-            </div>
-        @endforeach
+
+    <div class="grid gap-6 mt-4" id="post-list">
+        @include('website.partials.posts', ['posts' => $posts])
     </div>
+
+    @if ($posts->hasMorePages())
+        <button
+            id="load-more"
+            data-next-page="{{ $posts->currentPage() + 1 }}"
+            class="mt-6 px-6 py-2 bg-black text-white rounded"
+        >
+            Show more
+        </button>
+    @endif
+
+    <script>
+        document.getElementById('load-more')?.addEventListener('click', function () {
+            let button = this;
+            let page = button.getAttribute('data-next-page');
+
+            fetch(`?page=${page}`,
+                {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(res => res.text())
+            .then(html => {
+                document.getElementById('post-list').insertAdjacentHTML('beforeend', html);
+
+                button.setAttribute('data-next-page', parseInt(page) + 1);
+
+                if (!html.trim()) {
+                    button.remove();
+                }
+            });
+        });
+    </script>
+
+
 @endsection
