@@ -2,7 +2,7 @@
 namespace App\Http\Controllers\Website;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ProfileUpdateRequest;
+use App\Http\Requests\Website\SettingUpdateRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -22,7 +22,7 @@ class SettingController extends Controller
     /**
      * Update the user's profile information.
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function update(SettingUpdateRequest $request): RedirectResponse
     {
         $request->user()->fill($request->validated());
 
@@ -32,7 +32,7 @@ class SettingController extends Controller
 
         $request->user()->save();
 
-        return Redirect::route('website.settings.edit')->with('status', 'profile-updated');
+        return Redirect::route('blog.settings.edit')->with('status', 'profile-updated');
     }
 
     /**

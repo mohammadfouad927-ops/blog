@@ -37,11 +37,7 @@ class PostPolicy
      */
     public function update(User $user, Post $post): bool
     {
-
-        if(! $user->is_admin){
-            return $user->id === $post->user_id;
-        }
-        return !$post->user->is_admin || $user->id === $post->user_id;
+        return ($user->is_admin && !$post->user->is_admin) || $user->id === $post->user_id;
     }
 
     /**
@@ -50,10 +46,7 @@ class PostPolicy
     public function delete(User $user, Post $post): bool
     {
 
-        if(! $user->is_admin){
-            return $user->id === $post->user_id;
-        }
-        return !$post->user->is_admin || $user->id === $post->user_id;
+        return ($user->is_admin && !$post->user->is_admin) || $user->id === $post->user_id;
 
     }
 

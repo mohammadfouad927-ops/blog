@@ -1,4 +1,12 @@
 <section>
+
+    <section
+        x-data="{
+        open: false,
+        password: ''
+    }"
+    >
+
     <header>
         <h2 class="text-lg font-medium text-gray-900">
             {{ __('Profile Information') }}
@@ -13,10 +21,11 @@
         @csrf
     </form>
 
-    <form method="post" action="{{ route('blog.settings.update') }}" class="mt-6 space-y-6">
+    <form id="data-form" method="post" action="{{route('blog.settings.update')}}" class="mt-6 space-y-6">
         @csrf
         @method('patch')
 
+        <input type="hidden" name="password" x-model="password">
         <div>
             <x-input-label for="name" :value="__('Username')" />
             <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
@@ -60,7 +69,9 @@
         </div>
 
         <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('Save') }}</x-primary-button>
+            <x-primary-button
+                x-data=""
+                x-on:click.prevent="$dispatch('open-modal','reauth')">{{ __('Save') }}</x-primary-button>
 
             @if (session('status') === 'profile-updated')
                 <p
@@ -71,6 +82,47 @@
                     class="text-sm text-gray-600"
                 >{{ __('Saved.') }}</p>
             @endif
+            <x-input-error
+                class="mt-2" :messages="$errors->get('password')" />
         </div>
+        <x-modal name="reauth" focusable>
+            <div class="p-6">
+                <h2 class="text-lg font-medium text-gray-900">
+                    Confirm your password
+                </h2>
+
+                <p class="mt-2 text-sm text-gray-600">
+                    For security reasons, please confirm your password.
+                </p>
+
+                <div class="mt-4">
+                    <x-input-label for="confirm_password" value="Password" />
+
+                    <x-text-input
+                        id="confirm_password"
+                        type="password"
+                        class="mt-1 block w-full"
+                        x-model="password"
+                        required
+                        autofocus
+                    />
+                </div>
+
+                <div class="mt-6 flex justify-end gap-3">
+                    <x-secondary-button
+                        type="button"
+                        x-on:click="$dispatch('close')"
+                    >
+                        {{__('Cancel')}}
+                    </x-secondary-button>
+
+                    <x-primary-button type="submit">
+                        {{__('Confirm')}}
+                    </x-primary-button>
+                </div>
+            </div>
+        </x-modal>
+
     </form>
+
 </section>
