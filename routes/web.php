@@ -42,8 +42,8 @@ Route::prefix('/blog')->group(function(){
 
     Route::get('/@{user:name}/{post:slug}',[WebsitePostController::class,'show'])->name('blog.post.show');
     Route::resource('posts', WebsitePostController::class)
-        ->only(['edit', 'update', 'store', 'destroy'])
-        ->middlewareFor(['edit', 'update', 'store', 'destroy'],'auth')
+        ->only(['create','edit', 'update', 'store', 'destroy'])
+        ->middlewareFor(['create','edit', 'update', 'store', 'destroy'],'auth')
         ->names('blog.post');
 
     Route::get('/search', SearchController::class)->name('blog.search');

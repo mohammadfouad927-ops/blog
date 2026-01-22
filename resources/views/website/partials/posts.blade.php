@@ -6,7 +6,7 @@
                 </a>
             </h2>
             <p class="text-gray-600 mt-2">
-                {{ Str::limit($post->description, 150) }}
+                {{ Str::limit(strip_tags($post->description), 150) }}
             </p>
             <p class="text-lg mt-2">
                 <a href="{{route('blog.profile.show', $post->user)}}" class="hover:text-blue-600">

@@ -14,8 +14,18 @@ class SearchController extends Controller
     /**
      * Handle the incoming request.
      */
-    public function __invoke(Request $request):View{
+    public function __invoke(Request $request):View|JsonResponse{
         $query  = $request->get('q');
+        if($request->ajax()){
+            $users = User::where('name', 'like', '%' . $query . '%')->orWhere('first_name', 'like', '%' . $query . '%')
+                ->orWhere('last_name', 'like', '%' . $query . '%')
+                ->latest()->limit(5)->get(['name','first_name','last_name']);
+
+            return response()->json([
+                'query' => $query,
+                'users' => $users,
+            ]);
+        }
         $posts = Post::where('title', 'like', '%' . $query . '%')
             ->OrWhere('description', 'like' , '%' . $query . '%')
             ->with('user')->latest()->paginate(10);

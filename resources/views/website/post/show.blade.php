@@ -33,7 +33,7 @@
 
             {{-- Content --}}
             <p class="text-gray-800 leading-relaxed mb-2 text-base whitespace-pre-line">
-                {!! nl2br(e($post->description)) !!}
+                {!! $post->description !!}
             </p>
 
             {{-- Divider --}}
