@@ -52,7 +52,7 @@
 
                 {{-- Excerpt --}}
                 <p class="text-gray-700 leading-relaxed">
-                    {{ Str::limit($post->description, 180) }}
+                    {{ Str::limit(strip_tags($post->description), 150) }}
                 </p>
 
                 {{-- Read more --}}

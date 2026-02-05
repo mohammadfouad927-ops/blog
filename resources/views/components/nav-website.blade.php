@@ -114,7 +114,22 @@
                         <div id="userMenu"
                              class="hidden absolute right-0 mt-2 w-40
                                     bg-white border rounded shadow z-30">
-                            <!-- menu items unchanged -->
+                            <a href="{{ route('blog.settings.edit') }}"
+                               class="block px-4 py-2 hover:bg-gray-100">
+                                Settings
+                            </a>
+
+                            <a href="{{ route('blog.profile.show',[Auth::user()]) }}"
+                               class="block px-4 py-2 hover:bg-gray-100">
+                                Profile
+                            </a>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit"
+                                        class="w-full text-left px-4 py-2 hover:bg-gray-100">
+                                    Logout
+                                </button>
+                            </form>
                         </div>
                     </div>
                 @else

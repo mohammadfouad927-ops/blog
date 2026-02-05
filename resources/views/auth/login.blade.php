@@ -10,23 +10,30 @@
         </div>
 
         <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="login" :value="__('Email or Username')" />
+        <div class="input-group mt-4 relative">
             <x-text-input id="login" class="block mt-1 w-full" type="text" name="login" :value="old('login')" required autofocus autocomplete="login" />
+            <x-input-label for="login" :value="__('Email or Username')" class="absolute top-[50%] left-3 bg-white -translate-y-1/2 duration-300 ease-in text-lg" />
             <x-input-error :messages="$errors->get('login')" class="mt-2" />
         </div>
 
         <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
+        <div class="input-group relative mt-4">
             <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
+            type="password"
+            name="password"
+            required autocomplete="current-password" />
+
+            <x-input-label for="password" :value="__('Password')" class="absolute top-[50%] left-3 bg-white -translate-y-1/2 duration-300 ease-in text-lg"/>
 
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
+
+        <style>
+            .input-group input:focus+label, .input-group input:valid+label{
+                top:-1px;
+                font-size: 14px;
+            }
+        </style>
 
         <!-- Remember Me -->
         <div class="block mt-4">

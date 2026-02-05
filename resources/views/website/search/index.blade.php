@@ -26,7 +26,7 @@
                 @foreach($posts as $post)
                     <div class="bg-white rounded-xl shadow p-4 mb-6">
                         <h3 class="text-xl font-bold mb-2">{{ $post->title }}</h3>
-                        <p class="text-gray-700 mb-2">{{ Str::limit($post->description, 150) }}</p>
+                        <p class="text-gray-700 mb-2">{{ Str::limit(strip_tags($post->description), 150) }}</p>
                         <p class="mb-2">
                         <a class="text-gray-500 hover:text-black" href="{{route('blog.profile.show',[$post->user->name])}}">{{$post->user->name}}</a>
                         </p>

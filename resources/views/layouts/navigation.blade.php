@@ -22,6 +22,12 @@
                         {{ __('Posts') }}
                     </x-nav-link>
                 </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('user')" :active="request()->routeIs('user')">
+                        {{ __('Users') }}
+                    </x-nav-link>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->
@@ -77,6 +83,9 @@
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('posts.index')" :active="request()->routeIs('posts.*')">
+                {{ __('Posts') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('user')" :active="request()->routeIs('user')">
                 {{ __('Posts') }}
             </x-responsive-nav-link>
         </div>

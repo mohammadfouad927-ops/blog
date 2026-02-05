@@ -40,15 +40,16 @@ class PostController extends Controller
     {
         $post = $request->validated();
         $post['user_id'] = auth()->id();
-        $post['slug'] = Str::slug($post['title']).'-' . uniqid();
+        $post['slug']    = Str::slug($post['title']) . '-' . uniqid();
+
         Post::create($post);
+
         return redirect()->route('blog');
     }
 
     /**
      * Display the specified resource.
      */
-
     public function show(User $user, Post $post):View{
         return view('website.post.show',[
             'post' => $post,
@@ -57,7 +58,7 @@ class PostController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the existing resource.
      */
     public function edit(Post $post)
     {

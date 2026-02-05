@@ -1,0 +1,161 @@
+/**
+ * editorStyles.css
+ * All CSS for the Lexical editor, toolbar, quotes, tooltips, etc.
+ */
+
+/* ─── Editor layout ─────────────────────────────────────── */
+.editor-container {
+    position: relative;
+}
+
+.editor-placeholder {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+/* ─── Text styles ───────────────────────────────────────── */
+.editor-paragraph {
+    margin: 0.5rem 0;
+}
+
+.editor-text-bold {
+    font-weight: 700;
+}
+
+.editor-text-italic {
+    font-style: italic;
+}
+
+.editor-text-underline {
+    text-decoration: underline;
+}
+
+/* ─── Headings ──────────────────────────────────────────── */
+.editor-heading-h3 {
+    font-size: 1.875rem;   /* text-3xl */
+    font-weight: 700;
+    margin: 1rem 0;
+    color: #111827;
+}
+
+.editor-heading-h4 {
+    font-size: 1.5rem;     /* text-2xl */
+    font-weight: 600;
+    margin: 0.75rem 0;
+    color: #1f2937;
+}
+
+/* ─── Links ─────────────────────────────────────────────── */
+.editor-link {
+    color: #2563eb;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.editor-link:hover {
+    color: #1d4ed8;
+}
+
+/* ─── Quote styles ──────────────────────────────────────── */
+.quote-style-1 {
+    border-left: 4px solid #9CA3AF;
+    margin: 1rem 0;
+    font-style: italic;
+    color: #4B5563;
+    background-color: #F9FAFB;
+    padding: 1rem;
+    border-radius: 0 0.5rem 0.5rem 0;
+}
+
+.quote-style-2 {
+    border-left: 4px solid #3B82F6;
+    margin: 1rem 0;
+    font-style: italic;
+    color: #1E40AF;
+    background: linear-gradient(to right, #DBEAFE, transparent);
+    padding: 1rem;
+    border-radius: 0 0.5rem 0.5rem 0;
+    font-weight: 500;
+}
+
+/* ─── Floating toolbar ──────────────────────────────────── */
+.floating-toolbar {
+    animation: toolbarFadeIn 0.15s ease-out;
+}
+
+@keyframes toolbarFadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+/* Down-arrow below the toolbar */
+.floating-toolbar::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid #000;
+}
+
+/* ─── Toolbar buttons ───────────────────────────────────── */
+.toolbar-btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    color: #fff;
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.toolbar-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.toolbar-btn.active {
+    background: rgba(59, 130, 246, 0.6);
+}
+
+/* ─── Link tooltip (on hover) ───────────────────────────── */
+.link-tooltip {
+    position: absolute;
+    display: none;
+    background: #1F2937;
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    z-index: 10000;
+    max-width: 300px;
+    word-break: break-all;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    pointer-events: none;
+}
+
+/* Small arrow on top of tooltip */
+.link-tooltip::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: 10px;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-bottom: 4px solid #1F2937;
+}
